@@ -35,5 +35,8 @@ def basic_cnn_model_by_YJU(max_len, vocab_size):
 ## Step 2: Add your model name and model initialisation in the model dictionary below
 
 def return_model(model_name, max_len, vocab_size):
-    model_dic={'cnn': cnn_model(max_len, vocab_size)}
+    model_dic={
+        'cnn': cnn_model(max_len, vocab_size),
+        'basic_cnn_by_yju': basic_cnn_model_by_YJU(max_len, vocab_size),
+    }
     return model_dic[model_name]
