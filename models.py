@@ -19,6 +19,19 @@ def cnn_model(max_len, vocab_size):
 
 ## Step 1: Implement your own model below
 
+def basic_cnn_model_by_YJU(max_len, vocab_size):
+    model = Sequential([
+        InputLayer(input_shape=(max_len, vocab_size)),
+        Conv1D(128, 19, padding='same', activation='relu'),
+        Conv1D(128, 11, padding='same', activation='relu'),
+        Conv1D(128, 5, padding='same', activaiton='relu'),
+        Dense(1024, activation='relu'),
+        Dense(256, activation='relu'),
+        Dense(64, activation='relu'),
+        Dense(1, activation='sigmoid')
+    ])
+    return model;
+
 ## Step 2: Add your model name and model initialisation in the model dictionary below
 
 def return_model(model_name, max_len, vocab_size):
