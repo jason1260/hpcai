@@ -5,6 +5,7 @@ from tensorflow.keras.layers import Layer, Input, concatenate, Conv1D, MaxPoolin
     AveragePooling2D, GlobalAveragePooling2D, GlobalAveragePooling1D, AveragePooling1D, MultiHeadAttention,\
     LayerNormalization, Embedding, LeakyReLU, Conv1DTranspose
 
+from swintransformer import SwinTransformer
 
 def cnn_model(max_len, vocab_size):
     model = Sequential([
@@ -32,11 +33,19 @@ def basic_cnn_model_by_YJU(max_len, vocab_size):
     ])
     return model;
 
+def SwinTransformer_basic(max_len, vocab_size):
+    model = Sequential([
+        InputLayer(input_shape=(max_len,vocab_size)),
+        SwinTransformer('swin_tiny_224', include_top=False, pretrained=True),
+        Dense(1, activation='sigmoid')
+    ])
+    return model;
 ## Step 2: Add your model name and model initialisation in the model dictionary below
 
 def return_model(model_name, max_len, vocab_size):
     model_dic={
         'cnn': cnn_model(max_len, vocab_size),
         'basic_cnn_by_yju': basic_cnn_model_by_YJU(max_len, vocab_size),
+        'SwinTransformer_basic': SwinTransformer_basic(max_len, vocab_size), 
     }
     return model_dic[model_name]
