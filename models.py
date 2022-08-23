@@ -33,11 +33,19 @@ def basic_cnn_model_by_YJU(max_len, vocab_size):
     ])
     return model;
 
-def SwinTransformer_basic(max_len, vocab_size):
+def SwinTransformer_basic(max_len, vocab_size): # bug detected.
     model = Sequential([
         InputLayer(input_shape=(max_len,vocab_size)),
         SwinTransformer('swin_tiny_224', include_top=False, pretrained=True),
         Dense(1, activation='sigmoid')
+    ])
+    return model;
+
+def SwinTransformer_example(max_len, vocab_size): # try this one.
+    model = tf.keras.Sequential([
+        tf.keras.layers.Lambda(lambda data: tf.keras.applications.imagenet_utils.preprocess_input(tf.cast(data, tf.float32), mode="torch"), input_shape=[max_len, vocab_size]),
+        SwinTransformer('swin_tiny_224', include_top=False, pretrained=True),
+        tf.keras.layers.Dense(1, activation='softmax')
     ])
     return model;
 ## Step 2: Add your model name and model initialisation in the model dictionary below
@@ -47,5 +55,6 @@ def return_model(model_name, max_len, vocab_size):
         'cnn': cnn_model(max_len, vocab_size),
         'basic_cnn_by_yju': basic_cnn_model_by_YJU(max_len, vocab_size),
         'SwinTransformer_basic': SwinTransformer_basic(max_len, vocab_size), 
+        'SwinTransformer_example': SwinTransformer_example(max_len, vocab_size), 
     }
     return model_dic[model_name]
