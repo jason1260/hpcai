@@ -43,7 +43,7 @@ def SwinTransformer_basic(max_len, vocab_size): # bug detected.
 
 def SwinTransformer_example(max_len, vocab_size): # try this one.
     model = tf.keras.Sequential([
-        tf.keras.layers.Lambda(lambda data: tf.keras.applications.imagenet_utils.preprocess_input(tf.cast(data, tf.float32), mode="torch"), input_shape=[max_len, vocab_size]),
+        tf.keras.layers.Lambda(lambda data: tf.keras.applications.imagenet_utils.preprocess_input(tf.cast(data, tf.float32), mode="torch"), input_shape=[*[max_len, vocab_size], 1]),
         SwinTransformer('swin_tiny_224', include_top=False, pretrained=True),
         tf.keras.layers.Dense(1, activation='softmax')
     ])
